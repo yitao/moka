@@ -5,23 +5,32 @@ import CommonUtils from '../base/CommonUtils.js'
 
 const screenWidth = window.innerWidth
 const screenHeight = window.innerHeight
-let buttonCount = 0;
+let count = 0;
 
-export default class Button {
-    constructor(x, y, w, h, z,name) {
-        buttonCount++;
-        this.id = buttonCount
+export default class TextView {
+    constructor(x, y, w, h, z) {
+        count++;
+        this.id = count
         this.x = x
         this.y = y
         this.w = w
         this.h = h
         this.z = z
-        this.name = name
+        this.update = true
+    }
+
+    render(ctx) {
+        ctx.fillStyle = "#ff0000"
+        ctx.rect(this.x, this.y, this.w, this.h);
+        ctx.stroke()
+    }
+
+    update() {
+
     }
 
     onTouchStart(x, y) {
-        var name = this.name || ("button-" + this.id )
-        console.info(name + ",onTouchStart,x:" + x + ",y:" + y);
+        console.info("button-" + this.id + ",onTouchStart,x:" + x + ",y:" + y);
     }
 
     onTouchMove(x, y) {

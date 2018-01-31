@@ -3,30 +3,33 @@
  */
 import WorldData from './WorldData.js'
 import EventManager from './base/EventManager.js'
+import CtxManager from './base/CtxManager.js'
 import Button from './component/Button.js'
+import StartScene from './scene/StartScene.js'
+import ClickDemoScene from './scene/ClickDemoScene.js'
+import TimeGodDemoScene from './scene/TimeGodDemoScene.js'
 
 const screenWidth = window.innerWidth
 const screenHeight = window.innerHeight
 
 let worldData = new WorldData();
+
+//var canvas = wx.createCanvas()
 let eventManager = new EventManager(canvas);
 
-let size_small = 100;
-let size_big = 200;
-let btn1 = new Button(screenWidth/2-size_small/2,screenHeight/2-size_small/2,size_small,size_small,2);
-let btn2 = new Button(screenWidth/2-size_big/2,screenHeight/2-size_big/2,size_big,size_big,1);
-let ctx = canvas.getContext('2d')
+let ctxt = canvas.getContext('2d')
+let ctx = new CtxManager(ctxt,canvas);
+
 export default class Stage{
     constructor() {
         this.restart()
     }
     restart(){
         console.info("stage is restart")
-        worldData.startTs = new Date().getTime();
+        worldData.startTs = new Date().getTime()
+        this.currentScene = new ClickDemoScene()
 
-        eventManager.regEvent('touchstart',btn1)
-        eventManager.regEvent('touchstart',btn2)
-
+        this.currentScene.regEvent(eventManager)
         window.requestAnimationFrame(
             this.loop.bind(this),
             canvas
@@ -34,7 +37,7 @@ export default class Stage{
     }
     loop(){
         this.update()
-        this.render(ctx);
+        this.render();
         worldData.lastTs = new Date().getTime();
         window.requestAnimationFrame(
             this.loop.bind(this),
@@ -42,10 +45,9 @@ export default class Stage{
         )
     }
     update(){
-
+        this.currentScene.update()
     }
-    render(ctx){
-        btn1.render(ctx)
-        btn2.render(ctx)
+    render(){
+        this.currentScene.render(ctx)
     }
 }

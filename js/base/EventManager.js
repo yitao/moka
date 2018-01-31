@@ -44,7 +44,7 @@ export default class EventManager {
         var count = 0;
         var x = e.touches[0].clientX
         var y = e.touches[0].clientY
-        console.info("touchStartHandler,x=" + x + ",y=" + y)
+        console.info("touchStartHandler,x=" + x + ",y=" + y+",ts="+new Date().getTime())
         if (instance.eventTypeMap['touchstart']) {
             instance.eventTypeMap['touchstart'].all.forEach((t, i)=> {
                 if (t.isTouch(x, y) && count == 0) {
@@ -58,16 +58,16 @@ export default class EventManager {
     touchMoveHandler(e) {
         var x = e.touches[0].clientX
         var y = e.touches[0].clientY
-        console.info("touchMoveHandler,x=" + x + ",y=" + y)
+        console.info("touchMoveHandler,x=" + x + ",y=" + y+",ts="+new Date().getTime())
     }
 
     touchEndHandler(e) {
 
-        console.info("touchEndHandler")
+        console.info("touchEndHandler"+",ts="+new Date().getTime())
     }
 
     touchCancelHandler(e) {
 
-        console.info("touchCancelHandler,x=" + x + ",y=" + y)
+        console.info("touchCancelHandler,x=" + x + ",y=" + y+",ts="+new Date().getTime())
     }
 }
